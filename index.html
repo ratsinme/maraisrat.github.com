@@ -4,73 +4,27 @@
     <meta charset="UTF-8">
     <title>by rats</title>
     <style>
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
-        }
-
-        a {
-            color: #7289da;
-            font-size: 22px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .top-right-info {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #D3D3D3;
-            padding: 15px;
-            border-radius: 8px;
-            width: fit-content;
-            text-align: center;
-            font-family: sans-serif;
-            border: 1px solid #A9A9A9;
-            color: #333;
-        }
-
+        body { background-color: #111; color: #fff; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; position: relative; }
+        .box { background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.2); z-index: 10; }
+        a { color: #7289da; font-size: 22px; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        h1 { margin-bottom: 20px; font-size: 28px; }
+        .top-right-info { position: absolute; top: 20px; right: 20px; background-color: #D3D3D3; padding: 15px; border-radius: 8px; width: fit-content; text-align: center; font-family: sans-serif; border: 1px solid #A9A9A9; color: #333; }
         .top-right-info .server-by { font-weight: bold; margin-bottom: 4px; }
         .top-right-info .loading-by { font-size: 0.9em; color: #555; }
     </style>
 </head>
 <body>
 
-    <!-- Direct MP3 Link - No YouTube needed -->
-    <audio id="bgm" loop autoplay>
-        <source src="https://mfiles.co.uk" type="audio/mpeg">
+    <!-- Using a very high-compatibility MP3 link -->
+    <audio id="bgm" loop autoplay playsinline>
+        <source src="https://pixabay.com" type="audio/mpeg">
     </audio>
 
     <div class="box">
         <h1>Join the discord to get notified when I host the server</h1>
-        <!-- Kept your original links exactly as requested -->
         <a href="https://discord.gg" target="_blank">
-           https://discord.com/invite/37aBHKmG2U
+           https://discord.com
         </a>
     </div>
 
@@ -81,14 +35,22 @@
 
     <script>
         var music = document.getElementById("bgm");
-        music.volume = 0.4; // Sets volume to 40%
+        music.volume = 0.6;
 
-        // This tries to force the music to start as soon as the page loads
-        window.addEventListener('DOMContentLoaded', (event) => {
-            music.play().catch(error => {
-                console.log("Browser blocked autoplay. GMod Chromium usually allows this.");
+        // GMod specific: Try to play every half-second until it works
+        var playAttempt = setInterval(function() {
+            music.play().then(function() {
+                clearInterval(playAttempt);
+                console.log("Music started!");
+            }).catch(function(e) {
+                console.log("Still waiting for interaction or load...");
             });
-        });
+        }, 500);
+
+        // Backup for Browser: Music starts the MOMENT you click anywhere
+        document.body.addEventListener('mousedown', function() {
+            music.play();
+        }, { once: true });
     </script>
 </body>
 </html>
