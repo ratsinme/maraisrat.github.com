@@ -14,7 +14,7 @@
             height: 100vh;
             margin: 0;
             text-align: center;
-            position: relative; /* Needed for absolute positioning of the top-right box */
+            position: relative;
         }
 
         .box {
@@ -22,6 +22,7 @@
             padding: 40px;
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 10;
         }
 
         a {
@@ -31,51 +32,56 @@
             font-weight: bold;
         }
 
-            a:hover {
-                text-decoration: underline;
-            }
+        a:hover {
+            text-decoration: underline;
+        }
 
         h1 {
             margin-bottom: 20px;
             font-size: 28px;
         }
 
-        /* New styles for the top-right box */
         .top-right-info {
             position: absolute;
-            top: 20px; /* Adjust as needed for spacing from the top */
-            right: 20px; /* Adjust as needed for spacing from the right */
-            background-color: #D3D3D3; /* Light gray */
+            top: 20px;
+            right: 20px;
+            background-color: #D3D3D3;
             padding: 15px;
             border-radius: 8px;
             width: fit-content;
             text-align: center;
             font-family: sans-serif;
-            border: 1px solid #A9A9A9; /* A slightly darker gray border */
-            color: #333; /* Darker text color for better contrast on light gray */
+            border: 1px solid #A9A9A9;
+            color: #333;
         }
 
-        .top-right-info .server-by {
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
+        .top-right-info .server-by { font-weight: bold; margin-bottom: 4px; }
+        .top-right-info .loading-by { font-size: 0.9em; color: #555; }
 
-        .top-right-info .loading-by {
-            font-size: 0.9em;
-            color: #555;
+        /* Hides the YouTube player so only audio is heard */
+        .video-background {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1px; height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <!-- BACKGROUND MUSIC ENGINE -->
-    <audio id="bgm" loop autoplay>
-        <source src="https://mfiles.co.uk" type="audio/mpeg">
-    </audio>
+
+    <!-- Hidden YouTube Embed for Audio -->
+    <div class="video-background">
+        <iframe width="100%" height="100%" 
+            src="https://youtube.com" 
+            allow="autoplay">
+        </iframe>
+    </div>
 
     <div class="box">
         <h1>Join the discord to get notified when I host the server</h1>
         <a href="https://discord.gg" target="_blank">
-            https://discord.com
+           https://discord.com/invite/37aBHKmG2U
         </a>
     </div>
 
@@ -84,22 +90,5 @@
         <div class="loading-by">loading by:ratsinme</div>
     </div>
 
-    <script>
-        // This script forces the music to play and sets the volume
-        var music = document.getElementById("bgm");
-        music.volume = 0.5; // 50% volume
-
-        // Attempt to play immediately
-        document.addEventListener('DOMContentLoaded', function() {
-            music.play().catch(function(error) {
-                console.log("Autoplay blocked by browser. Click anywhere to play.");
-            });
-        });
-
-        // Backup: Play if the user clicks anywhere (common browser requirement)
-        document.body.addEventListener('mousedown', function() {
-            music.play();
-        }, { once: true });
-    </script>
 </body>
 </html>
