@@ -57,29 +57,18 @@
 
         .top-right-info .server-by { font-weight: bold; margin-bottom: 4px; }
         .top-right-info .loading-by { font-size: 0.9em; color: #555; }
-
-        /* Hides the YouTube player so only audio is heard */
-        .video-background {
-            position: absolute;
-            top: 0; left: 0;
-            width: 1px; height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Hidden YouTube Embed for Audio -->
-    <div class="video-background">
-        <iframe width="100%" height="100%" 
-            src="https://youtube.com" 
-            allow="autoplay">
-        </iframe>
-    </div>
+    <!-- Direct MP3 Link - No YouTube needed -->
+    <audio id="bgm" loop autoplay>
+        <source src="https://mfiles.co.uk" type="audio/mpeg">
+    </audio>
 
     <div class="box">
         <h1>Join the discord to get notified when I host the server</h1>
+        <!-- Kept your original links exactly as requested -->
         <a href="https://discord.gg" target="_blank">
            https://discord.com/invite/37aBHKmG2U
         </a>
@@ -90,5 +79,16 @@
         <div class="loading-by">loading by:ratsinme</div>
     </div>
 
+    <script>
+        var music = document.getElementById("bgm");
+        music.volume = 0.4; // Sets volume to 40%
+
+        // This tries to force the music to start as soon as the page loads
+        window.addEventListener('DOMContentLoaded', (event) => {
+            music.play().catch(error => {
+                console.log("Browser blocked autoplay. GMod Chromium usually allows this.");
+            });
+        });
+    </script>
 </body>
 </html>
